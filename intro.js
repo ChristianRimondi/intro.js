@@ -626,8 +626,8 @@
     }
 
     var tooltipLayerStyleLeft;
-    targetOffset  = _getOffset(targetElement);
-    tooltipOffset = _getOffset(tooltipLayer);
+    targetOffset  = _getOffset.call(this, targetElement);
+    tooltipOffset = _getOffset.call(this, tooltipLayer);
     windowSize    = _getWinSize();
 
     _addClass(tooltipLayer, 'introjs-' + currentTooltipPosition);
@@ -796,9 +796,9 @@
     var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
     var windowSize = _getWinSize();
-    var tooltipHeight = _getOffset(tooltipLayer).height + 10;
-    var tooltipWidth = _getOffset(tooltipLayer).width + 20;
-    var targetOffset = _getOffset(targetElement);
+    var tooltipHeight = _getOffset.call(this, tooltipLayer).height + 10;
+    var tooltipWidth = _getOffset.call(this, tooltipLayer).width + 20;
+    var targetOffset = _getOffset.call(this, targetElement);
 
     // adjust for scroll position
     targetOffset.top -= scrollTop;
@@ -944,7 +944,7 @@
       if (!this._introItems[this._currentStep]) return;
 
       var currentElement  = this._introItems[this._currentStep],
-          elementPosition = _getOffset(currentElement.element),
+          elementPosition = _getOffset.call(this, currentElement.element),
           widthHeightPadding = this._options.helperElementPadding;
 
       // If the target element is fixed, the tooltip should be fixed as well.
@@ -1631,7 +1631,7 @@
       overlayLayer.setAttribute('style', styleText);
     } else {
       //set overlay layer position
-      var elementPosition = _getOffset(targetElm);
+      var elementPosition = _getOffset.call(this, targetElm);
       if (elementPosition) {
         styleText += 'width: ' + elementPosition.width + 'px; height:' + elementPosition.height + 'px; top:' + elementPosition.top + 'px;left: ' + elementPosition.left + 'px;';
         overlayLayer.setAttribute('style', styleText);
@@ -2108,7 +2108,7 @@
       //calculate element top and left
       var _x = 0;
       var _y = 0;
-      while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop)) {
+      while (element && element != this._targetElement && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop)) {
         _x += element.offsetLeft;
         _y += element.offsetTop;
         element = element.offsetParent;
